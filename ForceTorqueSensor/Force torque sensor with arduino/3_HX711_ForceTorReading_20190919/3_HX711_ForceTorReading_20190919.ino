@@ -4,6 +4,8 @@ This example assumes pounds (lbs). If you prefer kilograms, change the Serial.pr
  Your calibration factor may be very positive or very negative. It all depends on the setup of your scale system
  and the direction the sensors deflect from zero state
  */
+
+ 
 #include "HX711.h"
 #define calibration_factor   -7050.0 //-7050 worked for my 440lb max scale setup
 //=========set up three different Scale===============================

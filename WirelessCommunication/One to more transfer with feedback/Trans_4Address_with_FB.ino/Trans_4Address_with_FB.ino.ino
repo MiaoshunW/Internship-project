@@ -1,11 +1,17 @@
-// SimpleTx - the master or the transmitter
-
+/*
+* Arduino Wireless Communication 
+* Transmitter Code 1 to 4 receivers
+*                
+* by Miaoshun Wu, www.HowToMechatronics.com
+* 08.10.2019
+* Library: TMRh20/RF24, https://github.com/tmrh20/RF24/
+*/
 #include <SPI.h>
 #include <nRF24L01.h>
 #include <RF24.h>
 #define CE_PIN   9
 #define CSN_PIN 10
-const byte slaveAddress[][6] = {"00011","00022","00033","00044"};     //Receiver address is used to send data by Master
+const byte slaveAddress[][4] = {"00011","00022","00033","00044"};     //Receiver address is used to send data by Master
 const byte masterAddress[5] = {'T','X','a','a','a'};                  //Master address is used to receive data by Master
 RF24 radio(CE_PIN, CSN_PIN);                                          // Create a Radio
 int txNum=0;
@@ -49,11 +55,11 @@ void send()
 {    
    radio.stopListening();                            // close receive pipe 
    bool rlst; 
-  if (txNum>3)                                       //make a loop to send data one by one
-      txNum=0;
+   if (txNum>3)                                       //make a loop to send data one by one
+       txNum=0;
      if (txNum==0)
      {
-        //set the address
+       //set the address
        radio.openWritingPipe(slaveAddress[0]);       /// SlaveAddress A
        rlst=radio.write(&dataSend_A, sizeof(dataSend_A)); // send the dataA  to Slave A
        radio.startListening();                       // open receive pipe start to receive data from slave
@@ -65,7 +71,7 @@ void send()
            Serial.println(dataSend_A[1]);
           }
      }
-  else if (txNum==1)
+     else if (txNum==1)
      {
      radio.openWritingPipe(slaveAddress[1]);         /// SlaveAddress B
      rlst=radio.write(&dataSend_B, sizeof(dataSend_B));
@@ -130,7 +136,6 @@ void getData()
         Serial.println(dataReceived[4]);
         Serial.println();
         newData = false;
-        
     }
 
 }

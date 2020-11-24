@@ -22,7 +22,7 @@ void setup() {
   radio.stopListening();              //Set module as transmitter
 }
 void loop() {
-  const char text[]="hello wfffff!!";  // the data type must be the same as receiver 
+  const char text[]="hello world!!";  // the data type must be the same as receiver 
   a=radio.write(&text, sizeof(text));  // send the text
   delay(1000);                         //delay 1s
   if (a==1)                             //a=1 to make sure that text is sent 

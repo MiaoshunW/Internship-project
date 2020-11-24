@@ -1,5 +1,11 @@
-// SimpleRx - the slave or the receiver
-
+/*
+* Arduino Wireless Communication Tutorial
+* Recevier1 Code
+*                
+* by MiaoshunWu
+* 
+* Library: TMRh20/RF24, https://github.com/tmrh20/RF24/
+*/
 #include <SPI.h>
 #include <nRF24L01.h>
 #include <RF24.h>
@@ -8,7 +14,7 @@
 #define CSN_PIN  10
 RF24 radio(CE_PIN, CSN_PIN);             // CE, CSN
   
-const byte slaveAddress[][6]= {"00011","00022","00033","00044"};            //Receiver address is used to send data by Master
+const byte slaveAddress[][4]= {"00011","00022","00033","00044"};            //Receiver address is used to send data by Master
 const byte masterAddress[5]= {'T','X','a','a','a'};                         //Master address is used to receive data by Master
 
 double dataReceived[2];                                                     // Receive data tpye must be the same as send data type                                       
@@ -30,7 +36,7 @@ void setup() {
     radio.begin();
     radio.setDataRate(RF24_250KBPS);
     radio.openWritingPipe(masterAddress);
-    radio.openReadingPipe(1,slaveAddress[1]);
+    radio.openReadingPipe(1,slaveAddress[0]);
     radio.setRetries(3,5);
     radio.startListening();
 }
@@ -60,10 +66,10 @@ void getData()
      if (newData == true) 
      {  
       Serial.print("Data received ");
-     Serial.print(" motor1:");
+     Serial.print(" motor1.1:");
      Serial.print(dataReceived[0]);
      Serial.print("  ,  ");
-     Serial.print("motor2:");
+     Serial.print("motor1.2:");
      Serial.println(dataReceived[1]);
      Serial.println("  ");
      }         
@@ -81,10 +87,10 @@ void senddata()
      {
                                                   
      Serial.println("Reply sent ");
-     Serial.print("from motor1:");
+     Serial.print("from motor1.1:");
      Serial.print(dataSend[0]);
      Serial.print("  ,  ");
-     Serial.print("from motor2:");
+     Serial.print("from motor1.2:");
      Serial.println(dataSend[1]);
      Serial.println("  ");
      }
